@@ -1,0 +1,103 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 700" width="1000" height="700">
+  <defs>
+    <style>
+      .bg { fill: #0f172a; }
+      .box { fill: #1e293b; stroke: #38bdf8; stroke-width: 2; rx: 8; }
+      .title-box { fill: #0284c7; }
+      .title-text { fill: #ffffff; font-family: monospace, sans-serif; font-size: 16px; font-weight: bold; text-anchor: middle; }
+      .field-text { fill: #e2e8f0; font-family: monospace, sans-serif; font-size: 13px; }
+      .field-type { fill: #94a3b8; font-family: monospace, sans-serif; font-size: 12px; }
+      .line { stroke: #38bdf8; stroke-width: 2; fill: none; stroke-dasharray: 4, 4; }
+      .solid-line { stroke: #38bdf8; stroke-width: 2; fill: none; }
+      .arrow { fill: #38bdf8; }
+    </style>
+    <marker id="arrow" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">
+      <path d="M0,0 L0,6 L9,3 z" fill="#38bdf8"/>
+    </marker>
+  </defs>
+
+  <rect width="1000" height="700" class="bg" />
+
+  <!-- Title -->
+  <text x="500" y="40" fill="#f8fafc" font-family="sans-serif" font-size="24" font-weight="bold" text-anchor="middle">Blog API — Entity Relationship Diagram (ERD)</text>
+
+  <!-- User Model -->
+  <g transform="translate(60, 100)">
+    <rect width="250" height="230" class="box" />
+    <path d="M 0,0 L 250,0 L 250,35 L 0,35 Z" class="title-box" rx="8" />
+    <rect width="250" height="10" y="25" fill="#0284c7" />
+    <text x="125" y="24" class="title-text">auths.User</text>
+    <text x="15" y="60" class="field-text">id <tspan class="field-type">[PK] BigAutoField</tspan></text>
+    <text x="15" y="85" class="field-text">email <tspan class="field-type">EmailField (unique)</tspan></text>
+    <text x="15" y="110" class="field-text">first_name <tspan class="field-type">CharField(50)</tspan></text>
+    <text x="15" y="135" class="field-text">last_name <tspan class="field-type">CharField(50)</tspan></text>
+    <text x="15" y="160" class="field-text">password <tspan class="field-type">CharField(128)</tspan></text>
+    <text x="15" y="185" class="field-text">is_active <tspan class="field-type">BooleanField</tspan></text>
+    <text x="15" y="210" class="field-text">is_staff <tspan class="field-type">BooleanField</tspan></text>
+  </g>
+
+  <!-- Category Model -->
+  <g transform="translate(700, 80)">
+    <rect width="240" height="120" class="box" />
+    <path d="M 0,0 L 240,0 L 240,35 L 0,35 Z" class="title-box" rx="8" />
+    <rect width="240" height="10" y="25" fill="#0284c7" />
+    <text x="120" y="24" class="title-text">blog.Category</text>
+    <text x="15" y="60" class="field-text">id <tspan class="field-type">[PK] BigAutoField</tspan></text>
+    <text x="15" y="85" class="field-text">name <tspan class="field-type">CharField(100) (UQ)</tspan></text>
+    <text x="15" y="110" class="field-text">slug <tspan class="field-type">SlugField (UQ)</tspan></text>
+  </g>
+
+  <!-- Tag Model -->
+  <g transform="translate(700, 240)">
+    <rect width="240" height="120" class="box" />
+    <path d="M 0,0 L 240,0 L 240,35 L 0,35 Z" class="title-box" rx="8" />
+    <rect width="240" height="10" y="25" fill="#0284c7" />
+    <text x="120" y="24" class="title-text">blog.Tag</text>
+    <text x="15" y="60" class="field-text">id <tspan class="field-type">[PK] BigAutoField</tspan></text>
+    <text x="15" y="85" class="field-text">name <tspan class="field-type">CharField(50) (UQ)</tspan></text>
+    <text x="15" y="110" class="field-text">slug <tspan class="field-type">SlugField (UQ)</tspan></text>
+  </g>
+
+  <!-- Post Model -->
+  <g transform="translate(380, 150)">
+    <rect width="260" height="275" class="box" />
+    <path d="M 0,0 L 260,0 L 260,35 L 0,35 Z" class="title-box" rx="8" />
+    <rect width="260" height="10" y="25" fill="#0284c7" />
+    <text x="130" y="24" class="title-text">blog.Post</text>
+    <text x="15" y="60" class="field-text">id <tspan class="field-type">[PK] BigAutoField</tspan></text>
+    <text x="15" y="85" class="field-text">author_id <tspan class="field-type">[FK] User (CASCADE)</tspan></text>
+    <text x="15" y="110" class="field-text">title <tspan class="field-type">CharField(200)</tspan></text>
+    <text x="15" y="135" class="field-text">slug <tspan class="field-type">SlugField (UQ)</tspan></text>
+    <text x="15" y="160" class="field-text">body <tspan class="field-type">TextField</tspan></text>
+    <text x="15" y="185" class="field-text">category_id <tspan class="field-type">[FK] Category (SET_NULL)</tspan></text>
+    <text x="15" y="210" class="field-text">status <tspan class="field-type">CharField(20) [Choices]</tspan></text>
+    <text x="15" y="235" class="field-text">created_at <tspan class="field-type">DateTimeField</tspan></text>
+    <text x="15" y="260" class="field-text">updated_at <tspan class="field-type">DateTimeField</tspan></text>
+  </g>
+
+  <!-- Comment Model -->
+  <g transform="translate(380, 480)">
+    <rect width="260" height="170" class="box" />
+    <path d="M 0,0 L 260,0 L 260,35 L 0,35 Z" class="title-box" rx="8" />
+    <rect width="260" height="10" y="25" fill="#0284c7" />
+    <text x="130" y="24" class="title-text">blog.Comment</text>
+    <text x="15" y="60" class="field-text">id <tspan class="field-type">[PK] BigAutoField</tspan></text>
+    <text x="15" y="85" class="field-text">post_id <tspan class="field-type">[FK] Post (CASCADE)</tspan></text>
+    <text x="15" y="110" class="field-text">author_id <tspan class="field-type">[FK] User (CASCADE)</tspan></text>
+    <text x="15" y="135" class="field-text">body <tspan class="field-type">TextField</tspan></text>
+    <text x="15" y="160" class="field-text">created_at <tspan class="field-type">DateTimeField</tspan></text>
+  </g>
+
+  <!-- Connectors -->
+  <!-- User to Post -->
+  <path d="M 310,215 L 380,215" class="solid-line" marker-end="url(#arrow)" />
+  <!-- Category to Post -->
+  <path d="M 700,140 L 640,210" class="solid-line" marker-end="url(#arrow)" />
+  <!-- Post to Tag (M2M) -->
+  <path d="M 640,300 L 700,300" class="line" marker-end="url(#arrow)" />
+  <!-- Post to Comment -->
+  <path d="M 510,425 L 510,480" class="solid-line" marker-end="url(#arrow)" />
+  <!-- User to Comment -->
+  <path d="M 185,330 L 185,550 L 380,550" class="solid-line" marker-end="url(#arrow)" />
+
+</svg>
