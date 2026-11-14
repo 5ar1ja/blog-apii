@@ -1,0 +1,89 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 800" width="1200" height="800">
+  <rect width="1200" height="800" fill="#0f172a"/>
+  <!-- Header -->
+  <rect width="1200" height="60" fill="#1e293b"/>
+  <text x="30" y="38" fill="#10b981" font-family="sans-serif" font-size="20" font-weight="bold">Blog API Administration — Dashboard</text>
+  <rect x="1050" y="16" width="120" height="28" rx="6" fill="#f59e0b"/>
+  <text x="1110" y="35" fill="#ffffff" font-family="sans-serif" font-size="13" font-weight="bold" text-anchor="middle">Local</text>
+  
+  <!-- Sidebar -->
+  <rect y="60" width="220" height="740" fill="#1e293b" opacity="0.9"/>
+  <text x="25" y="100" fill="#94a3b8" font-family="sans-serif" font-size="12" font-weight="bold">OVERVIEW</text>
+  <rect x="15" y="115" width="190" height="36" rx="6" fill="#10b981" opacity="0.2"/>
+  <text x="35" y="138" fill="#10b981" font-family="sans-serif" font-size="14" font-weight="bold">Dashboard</text>
+  
+  <text x="25" y="185" fill="#94a3b8" font-family="sans-serif" font-size="12" font-weight="bold">CONTENT</text>
+  <text x="35" y="215" fill="#e2e8f0" font-family="sans-serif" font-size="14">Posts (Drafts: 15)</text>
+  <text x="35" y="250" fill="#e2e8f0" font-family="sans-serif" font-size="14">Comments</text>
+  <text x="35" y="285" fill="#e2e8f0" font-family="sans-serif" font-size="14">Categories</text>
+  <text x="35" y="320" fill="#e2e8f0" font-family="sans-serif" font-size="14">Tags</text>
+
+  <text x="25" y="370" fill="#94a3b8" font-family="sans-serif" font-size="12" font-weight="bold">USERS &amp; ACCESS</text>
+  <text x="35" y="400" fill="#e2e8f0" font-family="sans-serif" font-size="14">Users</text>
+  <text x="35" y="435" fill="#e2e8f0" font-family="sans-serif" font-size="14">Groups</text>
+
+  <!-- Main Content -->
+  <!-- 4 Cards -->
+  <g transform="translate(250, 90)">
+    <rect width="210" height="110" rx="8" fill="#1e293b" stroke="#334155"/>
+    <text x="20" y="35" fill="#94a3b8" font-family="sans-serif" font-size="14">Total Users</text>
+    <text x="20" y="80" fill="#ffffff" font-family="sans-serif" font-size="32" font-weight="bold">21</text>
+    
+    <rect x="230" width="210" height="110" rx="8" fill="#1e293b" stroke="#334155"/>
+    <text x="250" y="35" fill="#94a3b8" font-family="sans-serif" font-size="14">Published Posts</text>
+    <text x="250" y="80" fill="#10b981" font-family="sans-serif" font-size="32" font-weight="bold">35</text>
+    
+    <rect x="460" width="210" height="110" rx="8" fill="#1e293b" stroke="#334155"/>
+    <text x="480" y="35" fill="#94a3b8" font-family="sans-serif" font-size="14">Draft Posts</text>
+    <text x="480" y="80" fill="#f59e0b" font-family="sans-serif" font-size="32" font-weight="bold">15</text>
+    
+    <rect x="690" width="210" height="110" rx="8" fill="#1e293b" stroke="#334155"/>
+    <text x="710" y="35" fill="#94a3b8" font-family="sans-serif" font-size="14">Comments</text>
+    <text x="710" y="80" fill="#ffffff" font-family="sans-serif" font-size="32" font-weight="bold">100</text>
+  </g>
+
+  <!-- Progress Bar Card -->
+  <g transform="translate(250, 225)">
+    <rect width="900" height="85" rx="8" fill="#1e293b" stroke="#334155"/>
+    <text x="20" y="30" fill="#f1f5f9" font-family="sans-serif" font-size="15" font-weight="bold">Publication Status Distribution</text>
+    <text x="750" y="30" fill="#10b981" font-family="sans-serif" font-size="13">70% Published / 30% Drafts</text>
+    <rect x="20" y="45" width="600" height="16" rx="4" fill="#10b981"/>
+    <rect x="625" y="45" width="255" height="16" rx="4" fill="#f59e0b"/>
+  </g>
+
+  <!-- Chart & Table -->
+  <g transform="translate(250, 335)">
+    <!-- Bar Chart Card -->
+    <rect width="435" height="420" rx="8" fill="#1e293b" stroke="#334155"/>
+    <text x="20" y="35" fill="#f1f5f9" font-family="sans-serif" font-size="16" font-weight="bold">Posts by Category</text>
+    <!-- Bar Chart Graphic -->
+    <line x1="40" y1="360" x2="395" y2="360" stroke="#475569" stroke-width="2"/>
+    <rect x="60" y="160" width="30" height="200" fill="#10b981" rx="4"/>
+    <rect x="105" y="120" width="30" height="240" fill="#10b981" rx="4"/>
+    <rect x="150" y="200" width="30" height="160" fill="#10b981" rx="4"/>
+    <rect x="195" y="140" width="30" height="220" fill="#10b981" rx="4"/>
+    <rect x="240" y="240" width="30" height="120" fill="#10b981" rx="4"/>
+    <rect x="285" y="180" width="30" height="180" fill="#10b981" rx="4"/>
+    <rect x="330" y="220" width="30" height="140" fill="#10b981" rx="4"/>
+    
+    <!-- Table Card -->
+    <rect x="465" width="435" height="420" rx="8" fill="#1e293b" stroke="#334155"/>
+    <text x="485" y="35" fill="#f1f5f9" font-family="sans-serif" font-size="16" font-weight="bold">Top 5 Authors</text>
+    <rect x="485" y="55" width="395" height="35" fill="#334155" rx="4"/>
+    <text x="500" y="78" fill="#cbd5e1" font-family="sans-serif" font-size="13" font-weight="bold">Author</text>
+    <text x="650" y="78" fill="#cbd5e1" font-family="sans-serif" font-size="13" font-weight="bold">Email</text>
+    <text x="830" y="78" fill="#cbd5e1" font-family="sans-serif" font-size="13" font-weight="bold">Posts</text>
+    
+    <text x="500" y="120" fill="#f8fafc" font-family="sans-serif" font-size="13">Jane Doe</text>
+    <text x="650" y="120" fill="#94a3b8" font-family="sans-serif" font-size="13">jane.doe@example.com</text>
+    <text x="840" y="120" fill="#10b981" font-family="sans-serif" font-size="13" font-weight="bold">12</text>
+    
+    <text x="500" y="165" fill="#f8fafc" font-family="sans-serif" font-size="13">John Smith</text>
+    <text x="650" y="165" fill="#94a3b8" font-family="sans-serif" font-size="13">john.smith@example.com</text>
+    <text x="840" y="165" fill="#10b981" font-family="sans-serif" font-size="13" font-weight="bold">9</text>
+    
+    <text x="500" y="210" fill="#f8fafc" font-family="sans-serif" font-size="13">Alice Taylor</text>
+    <text x="650" y="210" fill="#94a3b8" font-family="sans-serif" font-size="13">alice.t@example.com</text>
+    <text x="840" y="210" fill="#10b981" font-family="sans-serif" font-size="13" font-weight="bold">7</text>
+  </g>
+</svg>

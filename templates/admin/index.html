@@ -1,0 +1,72 @@
+{% extends 'admin/base.html' %}
+
+{% load i18n unfold %}
+
+{% block title %}{% if subtitle %}{{ subtitle }} | {% endif %}{{ title }} | {{ site_title|default:_('Django site admin') }}{% endblock %}
+
+{% block branding %}
+    {% include "unfold/helpers/site_branding.html" %}
+{% endblock %}
+
+{% block content %}
+    <div class="flex flex-col gap-6">
+        <!-- 1. KPI Cards -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+            {% component "unfold/components/card.html" with title="Total Users" title_icon="people" label=kpi_total_users %}
+                <div class="text-3xl font-bold text-important mt-1">
+                    {{ kpi_total_users }}
+                </div>
+                <p class="text-subtle text-xs mt-1">Registered platform users</p>
+            {% endcomponent %}
+
+            {% component "unfold/components/card.html" with title="Published Posts" title_icon="check_circle" label=kpi_published_posts %}
+                <div class="text-3xl font-bold text-emerald-600 dark:text-emerald-400 mt-1">
+                    {{ kpi_published_posts }}
+                </div>
+                <p class="text-subtle text-xs mt-1">Live blog posts</p>
+            {% endcomponent %}
+
+            {% component "unfold/components/card.html" with title="Draft Posts" title_icon="edit_note" label=kpi_draft_posts %}
+                <div class="text-3xl font-bold text-amber-500 mt-1">
+                    {{ kpi_draft_posts }}
+                </div>
+                <p class="text-subtle text-xs mt-1">Posts pending review or publication</p>
+            {% endcomponent %}
+
+            {% component "unfold/components/card.html" with title="Comments" title_icon="forum" label=kpi_total_comments %}
+                <div class="text-3xl font-bold text-important mt-1">
+                    {{ kpi_total_comments }}
+                </div>
+                <p class="text-subtle text-xs mt-1">Total user interactions</p>
+            {% endcomponent %}
+        </div>
+
+        <!-- 4. Progress Bars -->
+        {% component "unfold/components/card.html" with title="Publication Status Distribution" title_icon="donut_large" %}
+            <div class="p-2 flex flex-col gap-3">
+                <div class="flex justify-between text-sm">
+                    <span class="text-emerald-600 dark:text-emerald-400 font-medium">Published: {{ published_pct }}% ({{ kpi_published_posts }})</span>
+                    <span class="text-amber-500 font-medium">Drafts: {{ draft_pct }}% ({{ kpi_draft_posts }})</span>
+                </div>
+                {% component "unfold/components/progress.html" with items=posts_progress_items separated_items=1 %}{% endcomponent %}
+            </div>
+        {% endcomponent %}
+
+        <!-- 2. Bar Chart & 3. Table -->
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+            <!-- 2. Bar chart: Posts per category -->
+            {% component "unfold/components/card.html" with title="Posts by Category" title_icon="bar_chart" %}
+                <div class="p-2">
+                    {% component "unfold/components/chart/bar.html" with data=category_chart_json height=260 %}{% endcomponent %}
+                </div>
+            {% endcomponent %}
+
+            <!-- 3. Table: Top 5 authors by posts -->
+            {% component "unfold/components/card.html" with title="Top 5 Authors" title_icon="military_tech" %}
+                <div class="overflow-x-auto">
+                    {% component "unfold/components/table.html" with table=top_authors_table card_included=1 %}{% endcomponent %}
+                </div>
+            {% endcomponent %}
+        </div>
+    </div>
+{% endblock %}
