@@ -93,6 +93,29 @@ Done in 2.14 seconds
 
 ---
 
+## ORM Queries
+
+Run all read-only numbered ORM examples, or select one query. The `--sql` option prints
+the SQL statements captured while the selected function runs.
+
+```bash
+python manage.py queries
+python manage.py queries --number 31
+python manage.py queries --number 6 --sql
+```
+
+Example output:
+
+```text
+#6 has_drafts — 1 SQL query
+  True
+```
+
+Queries 40–44 change database data, so they run only when selected explicitly with
+`--number`. Run `python manage.py seed --clear` to restore fresh sample data.
+
+---
+
 ## Admin Panel (Django Unfold)
 
 The administration interface is styled using **Django Unfold**:
