@@ -1,10 +1,12 @@
 import random
 import time
+from datetime import datetime, timedelta
 from typing import Any
 
 from django.contrib.auth import get_user_model
 from django.contrib.auth.hashers import make_password
 from django.core.management.base import BaseCommand, CommandError, CommandParser
+from django.utils import timezone
 from django.utils.text import slugify
 from faker import Faker
 
@@ -22,6 +24,10 @@ STAFF_USER_RATIO = 0.15
 PUBLISHED_RATIO = 0.70
 NO_CATEGORY_RATIO = 0.10
 MAX_TAGS_PER_POST = 5
+DAYS_BACK = 365
+EDITED_POST_RATIO = 0.30
+MIN_EDITED_DELAY_DAYS = 1
+MAX_EDITED_DELAY_DAYS = 30
 
 CATEGORIES_DATA = [
     "Python",
@@ -122,7 +128,9 @@ class Command(BaseCommand):
 
             counter = 1
             while candidate_email in used_emails:
-                candidate_email = f"{clean_first}.{clean_last}{counter}@{domain}".lower()
+                candidate_email = (
+                    f"{clean_first}.{clean_last}{counter}@{domain}".lower()
+                )
                 counter += 1
 
             used_emails.add(candidate_email)
@@ -146,7 +154,9 @@ class Command(BaseCommand):
 
         all_users = list(User.objects.all())
         if (posts_count > 0 or comments_count > 0) and not all_users:
-            raise CommandError("Posts or comments requested, but there are no users in database.")
+            raise CommandError(
+                "Posts or comments requested, but there are no users in database."
+            )
 
         # 2. Categories
         existing_categories = {c.slug: c for c in Category.objects.all()}
@@ -177,6 +187,7 @@ class Command(BaseCommand):
         created_tags_count = len(tags_to_create)
 
         # 4. Posts
+        now = timezone.now()
         used_slugs = set(Post.objects.values_list("slug", flat=True))
         new_posts: list[Post] = []
         post_tags_map: list[list[Tag]] = []
@@ -234,19 +245,46 @@ class Command(BaseCommand):
             if through_records:
                 through_model.objects.bulk_create(through_records)
 
+            # auto_now_add / auto_now overwrite dates in bulk_create,
+            # so we set realistic dates afterwards with one bulk_update.
+            max_age_seconds = int(timedelta(days=DAYS_BACK).total_seconds())
+            for post_obj in created_posts:
+                post_obj.created_at = now - timedelta(
+                    seconds=random.randint(0, max_age_seconds)
+                )
+                post_obj.updated_at = post_obj.created_at
+                if random.random() < EDITED_POST_RATIO:
+                    edit_delay_days = random.randint(
+                        MIN_EDITED_DELAY_DAYS, MAX_EDITED_DELAY_DAYS
+                    )
+                    post_obj.updated_at = min(
+                        post_obj.created_at + timedelta(days=edit_delay_days), now
+                    )
+            Post.objects.bulk_update(created_posts, ["created_at", "updated_at"])
+
         created_posts_count = len(created_posts)
 
         # 5. Comments
-        published_posts = list(Post.objects.filter(status=Post.Status.PUBLISHED))
+        published_posts = [
+            p for p in created_posts if p.status == Post.Status.PUBLISHED
+        ] or list(Post.objects.filter(status=Post.Status.PUBLISHED))
+
         if comments_count > 0 and not published_posts:
-            raise CommandError("Comments were requested, but there are no published posts.")
+            raise CommandError(
+                "Comments were requested, but there are no published posts."
+            )
 
         new_comments: list[Comment] = []
+        comment_dates: list[datetime] = []
         for _ in range(comments_count):
             post = random.choice(published_posts)
             author = random.choice(all_users)
             sentence_count = random.randint(1, 3)
             body = " ".join(fake.sentences(nb=sentence_count))
+            span_seconds = max(0, int((now - post.created_at).total_seconds()))
+            created_at = post.created_at + timedelta(
+                seconds=random.randint(0, span_seconds)
+            )
             new_comments.append(
                 Comment(
                     post=post,
@@ -254,9 +292,13 @@ class Command(BaseCommand):
                     body=body,
                 )
             )
+            comment_dates.append(created_at)
 
         if new_comments:
-            Comment.objects.bulk_create(new_comments)
+            created_comments = Comment.objects.bulk_create(new_comments)
+            for comment_obj, created_at in zip(created_comments, comment_dates):
+                comment_obj.created_at = created_at
+            Comment.objects.bulk_update(created_comments, ["created_at"])
 
         created_comments_count = len(new_comments)
         elapsed = time.time() - start_time
